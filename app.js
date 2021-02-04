@@ -22,6 +22,8 @@ var uiController = (function() {
   };
 })();
 
+
+
 // Санхүүтэй ажиллах контроллер
 var financeController = (function() {
   var Income = function(id, description, value) {
@@ -37,7 +39,7 @@ var financeController = (function() {
   };
 
   var data = {
-    allItems: {
+    items: {
       inc: [],
       exp: []
     },
@@ -47,13 +49,20 @@ var financeController = (function() {
       exp: 0
     }
   };
+  return {
+    addItem : function(type, desc, val){
+      console.log("item added...");
+    }
+  }
 })();
 
 // Програмын холбогч контроллер
 var appController = (function(uiController, financeController) {
   var ctrlAddItem = function() {
     // 1. Оруулах өгөгдлийг дэлгэцээс олж авна.
-    console.log(uiController.getInput());
+    var input = uiController.getInput();
+    
+    financeController.addItem(input.type, input.description, input.value);
     // 2. Олж авсан өгөгдлүүдээ санхүүгийн контроллерт дамжуулж тэнд хадгална.
     // 3. Олж авсан өгөгдлүүдээ вэб дээрээ тохирох хэсэгт нь гаргана
     // 4. Төсвийг тооцоолно
