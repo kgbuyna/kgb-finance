@@ -4,7 +4,10 @@ var uiController = (function() {
     inputType: ".add__type",
     inputDescription: ".add__description",
     inputValue: ".add__value",
-    addBtn: ".add__btn"
+    addBtn: ".add__btn",
+    incomeList: ".income__list",
+    expenseList: ".expenses__list" 
+
   };
 
   return {
@@ -19,16 +22,25 @@ var uiController = (function() {
     getDOMstrings: function() {
       return DOMstrings;
     },
+    clearFields: function(){
+      var fields = document.querySelectorAll(
+        DOMstrings.inputDescription + ", " + DOMstrings.inputValue
+      );
+      var fieldsArr = Array.prototype.slice.call(fields);
+      for(var i = 0; i < fieldsArr.length; i++){
+        fieldsArr[i].value = "";
+      }
+    },
 
     addListItem: function(item, type) {
       // Орлого зарлагын элементийг агуулсан html-ийг бэлтгэнэ.
       var html, list;
       if (type === "inc") {
-        list = ".income__list";
+        list = DOMstrings.incomeList;
         html =
           '<div class="item clearfix" id="income-%id%"><div class="item__description">$$DESCRIPTION$$</div><div class="right clearfix"><div class="item__value">$$VALUE$$</div><div class="item__delete">            <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div>        </div></div>';
       } else {
-        list = ".expenses__list";
+        list = DOMstrings.expenseList;
         html =
           '<div class="item clearfix" id="expense-%id%"><div class="item__description">$$DESCRIPTION$$</div>          <div class="right clearfix"><div class="item__value">$$VALUE$$</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn">                <i class="ion-ios-close-outline"></i></button></div></div></div>';
       }
@@ -103,6 +115,7 @@ var appController = (function(uiController, financeController) {
   var ctrlAddItem = function() {
     // 1. Оруулах өгөгдлийг дэлгэцээс олж авна.
     var input = uiController.getInput();
+    
 
     // 2. Олж авсан өгөгдлүүдээ санхүүгийн контроллерт дамжуулж тэнд хадгална.
     var item = financeController.addItem(
@@ -113,6 +126,7 @@ var appController = (function(uiController, financeController) {
 
     // 3. Олж авсан өгөгдлүүдээ вэб дээрээ тохирох хэсэгт нь гаргана
     uiController.addListItem(item, input.type);
+    uiController.clearFields();
 
     // 4. Төсвийг тооцоолно
     // 5. Эцсийн үлдэгдэл, тооцоог дэлгэцэнд гаргана.
