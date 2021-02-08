@@ -22,15 +22,7 @@ var uiController = (function() {
     getDOMstrings: function() {
       return DOMstrings;
     },
-    clearFields: function(){
-      var fields = document.querySelectorAll(
-        DOMstrings.inputDescription + ", " + DOMstrings.inputValue
-      );
-      var fieldsArr = Array.prototype.slice.call(fields);
-      for(var i = 0; i < fieldsArr.length; i++){
-        fieldsArr[i].value = "";
-      }
-    },
+    
 
     addListItem: function(item, type) {
       // Орлого зарлагын элементийг агуулсан html-ийг бэлтгэнэ.
@@ -51,6 +43,13 @@ var uiController = (function() {
 
       // Бэлтгэсэн HTML ээ DOM руу хийж өгнө.
       document.querySelector(list).insertAdjacentHTML("beforeend", html);
+    },
+    clearFields : function(){
+      var fields = document.querySelectorAll(
+        DOMstrings.inputDescription + ", " + DOMstrings.inputValue
+      );
+      var fieldsArr = Array.prototype.slice.call(fields);
+
     }
   };
 })();
@@ -115,7 +114,6 @@ var appController = (function(uiController, financeController) {
   var ctrlAddItem = function() {
     // 1. Оруулах өгөгдлийг дэлгэцээс олж авна.
     var input = uiController.getInput();
-    
 
     // 2. Олж авсан өгөгдлүүдээ санхүүгийн контроллерт дамжуулж тэнд хадгална.
     var item = financeController.addItem(
@@ -126,7 +124,7 @@ var appController = (function(uiController, financeController) {
 
     // 3. Олж авсан өгөгдлүүдээ вэб дээрээ тохирох хэсэгт нь гаргана
     uiController.addListItem(item, input.type);
-    uiController.clearFields();
+    
 
     // 4. Төсвийг тооцоолно
     // 5. Эцсийн үлдэгдэл, тооцоог дэлгэцэнд гаргана.
